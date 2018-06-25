@@ -1,0 +1,53 @@
+version: '3'
+services:
+  wallet:
+    build:
+      build:
+        context: .
+        args:
+          REPOSITORY: 'https://github.com/crowdcoinChain/Crowdcoin'
+          REF: master
+    restart: always
+    ports:
+      - '12875:12875'
+      - '11998:11998'
+    command:
+      - '-rpcuser=crowdcoin-wallet'
+      - '-rpcpassword=tihegeaz'
+      - '-server=1'
+      - '-listen=0'
+    volumes:
+      - './wallet/:/home/crowdcoin/'
+  masternode:
+    build:
+      build:
+        context: .
+        args:
+          REPOSITORY: 'https://github.com/crowdcoinChain/Crowdcoin'
+          REF: master
+    restart: always
+    ports:
+      - '12875:12875'
+      - '11998:11998'
+    command:
+      - '-rpcuser=crowdcoin-mn01'
+      - '-rpcpassword=tihegeaz'
+      - '-rpcallowip=::/0'
+      - '-server=0'
+      - '-listen=1'
+      - '-masternode=1'
+      - '-masternodeprivkey=YourMasternodePrivKey'
+      - '-addnode=45.32.26.253:12875'
+      - '-addnode=78.24.223.185:12875'
+      - '-addnode=88.198.45.221:12875'
+      - '-addnode=84.17.23.43:12875'
+      - '-addnode=18.220.138.90:12875'
+      - '-addnode=86.57.164.166:12875'
+      - '-addnode=86.57.164.146:12875'
+      - '-addnode=18.217.78.145:12875'
+      - '-addnode=23.92.30.230:12875'
+      - '-addnode=35.190.182.68:12875'
+      - '-addnode=80.209.236.4:12875'
+      - '-addnode=91.201.40.89:12875'
+    volumes:
+      - './masternode/:/home/crowdcoin/'
